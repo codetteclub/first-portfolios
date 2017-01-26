@@ -1,0 +1,22 @@
+</!DOCTYPE html>
+<html>
+<head>
+	<title>First Portfolio Gallery</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+    <meta name="author" content="Natalie Baker">
+    <link href="./css/styles.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1>Choose A Portfolio</h1>
+        <select id="list" onchange="gallery.displayPortfolio()">
+            <option value="" disabled selected hidden>Choose a Page</option>
+        </select>
+    </header>
+    <div id="display"></div>
+    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+</html>
