@@ -3,6 +3,16 @@ extends layout
 block content
 	header
 		h1 Choose a Portfolio
-		select(id='list' onchange='gallery.displayPortfolio()')
-			option(value='' disabled selected hidden) Choose a Page
-	div(id='display')
+		select(id="list" onchange="displayPortfolio()")
+			option(value="" disabled selected hidden) Choose a page
+			for portfolio, i in portfolios
+				option(value=portfolios[i].oldURL) #{portfolios[i].name}
+
+	div(id="display")
+	script.
+		function displayPortfolio() {
+		document.getElementById('display').innerHTML='';
+		var iframe = document.createElement('iframe');
+		iframe.src = document.getElementById('list').value;
+		document.getElementById('display').appendChild(iframe);
+		};

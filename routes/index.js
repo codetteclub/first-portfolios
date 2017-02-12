@@ -2,42 +2,38 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 var path = require('path');
-var directory = './portfolios';
-var gallery = {
-	fileList: [],
-	portfolios: [],
-	display: function() {
-		for (var i = 0; i < gallery.fileList.length; i++) {
-			var URL = './portfolios' + gallery.fileList[i];
-			$.getScript(URL.toString(), function() {
-				gallery.portfolios.push(newPortfolio);
-			})
-		}	
-	}
-};
-gallery.display();
-console.log(gallery.portfolios);
-fs.realpath(directory, function(err, path) {
-	if (err) {
-		console.log(err);
-	return;
-	}
-	console.log('Path is : ' + path);
+var directory = './portfolios/';
+
+
+
+function display() {
+	var fileList = [];
+	var portfolios = [];
+	fs.readdir(directory, function(err, files) {
+		if (err) return;
+		files.forEach(function(f) {
+			fileList.push(f);
+		});
+		//console.log(fileList);
+		fileList.forEach(function(p) {
+			var file = directory + p;
+			//console.log(file);
+			var portfolio = JSON.parse(fs.readFileSync(file, 'utf8'));
+			//console.log(portfolio.name);
+			portfolios.push(portfolio);
+		})
+		console.log(portfolios);
+		router.get('/', function(req, res, next) {
+	
+	res.render('index', { title: 'Portfolio Gallery', portfolios: portfolios });
+	
+
 });
-fs.readdir(directory, function(err, files) {
-	if (err) return;
-	files.forEach(function(f) {
-		gallery.fileList.push(f);
 	});
-	//console.log(gallery.fileList);
-});
+}
+//console.log(portfolios);
 
 // get home page
-router.get('/', function(req, res, next) {
-	
-	res.render('index', { title: 'Portfolio Gallery' });
-	
 
-});
-
+display();
 module.exports = router;
